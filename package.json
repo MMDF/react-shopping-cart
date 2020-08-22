@@ -21,7 +21,7 @@
     "start": "react-scripts start",
     "server": "nodemon server/app",
     "wdio": "wdio",
-    "build": "ts-node --transpile-only build.ts && react-scripts build",
+    "build": "ts-node -T -O {\\\"esModuleInterop\\\":true} build.ts && react-scripts build",
     "test": "react-scripts test",
     "test:coverage": "npm run test -- --coverage",
     "format": "prettier --write \"**/*.+(js|json|css)\"",
