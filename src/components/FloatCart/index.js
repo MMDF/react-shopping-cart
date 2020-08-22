@@ -81,12 +81,7 @@ class FloatCart extends Component {
   };
 
   proceedToCheckout = () => {
-    const {
-      totalPrice,
-      productQuantity,
-      currencyFormat,
-      currencyId,
-    } = this.props.cartTotal;
+    const { totalPrice, productQuantity } = this.props.cartTotal;
 
     if (!productQuantity) {
       alert('Sepet boş!');

@@ -55,10 +55,14 @@ async function main() {
   const discountCsv = await csv((await axios.get(discountUrl)).data, {
     headers: false,
   });
-  console.log(prodCsv);
+  // console.log(prodCsv);
   fs.writeFileSync(
     './public/products.json',
-    JSON.stringify({ products: prodCsv })
+    JSON.stringify({
+      products: prodCsv,
+      camera: cameraCsv,
+      discount: discountCsv,
+    })
   );
 }
 
