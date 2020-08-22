@@ -4,16 +4,19 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { updateFilters } from '../../../services/filters/actions';
 import Checkbox from '../../Checkbox';
-import GithubStarButton from '../../github/StarButton';
 
 import './style.scss';
 
-const availableSizes = ['XS', 'S', 'M', 'ML', 'L', 'XL', 'XXL'];
+const labels = {
+  Tür: ['Paket', 'Uç Birim', 'Kamera'],
+  'Bağlantı Türü': ['Kablolu', 'Kablosuz'],
+  Marka: ['Paradox', 'Satel'],
+};
 
-const Filter = props => {
+const Filter = (props) => {
   const selectedCheckboxes = new Set();
 
-  const toggleCheckbox = label => {
+  const toggleCheckbox = (label) => {
     if (selectedCheckboxes.has(label)) {
       selectedCheckboxes.delete(label);
     } else {
@@ -23,7 +26,7 @@ const Filter = props => {
     props.updateFilters(Array.from(selectedCheckboxes));
   };
 
-  const createCheckbox = label => (
+  const createCheckbox = (label) => (
     <Checkbox
       classes="filters-available-size"
       label={label}
@@ -32,23 +35,23 @@ const Filter = props => {
     />
   );
 
-  const createCheckboxes = () => availableSizes.map(createCheckbox);
+  const createCheckboxes = (a) => a.map(createCheckbox);
 
   return (
     <div className="filters">
-      <h4 className="title">Sizes:</h4>
-      {createCheckboxes()}
-      <GithubStarButton />
+      {Object.keys(labels).map((labelCategory) => (
+        <>
+          <h2>{labelCategory}:</h2>
+          {createCheckboxes(labels[labelCategory])}
+        </>
+      ))}
     </div>
   );
 };
 
 Filter.propTypes = {
   updateFilters: PropTypes.func.isRequired,
-  filters: PropTypes.array
+  filters: PropTypes.array,
 };
 
-export default connect(
-  null,
-  { updateFilters }
-)(Filter);
+export default connect(null, { updateFilters })(Filter);

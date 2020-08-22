@@ -56,14 +56,15 @@
       -moz-user-select: none;
       -ms-user-select: none;
       user-select: none;
-      width: 35px;
-      height: 35px;
-      font-size: 0.8em;
+      // width: 35px;
+      // height: 35px;
+      font-size: 1.5em;
       margin-bottom: 8px;
       margin-right: 8px;
       border-radius: 50%;
       line-height: 35px;
       text-align: center;
+      margin: 0.2em;
 
       /* On mouse-over, add a grey background color */
       &:hover input ~ .checkmark {
@@ -83,19 +84,24 @@
 
       input {
         position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
         opacity: 0;
         cursor: pointer;
       }
 
       /* Create a custom checkbox */
       .checkmark {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 35px;
-        height: 35px;
+        // position: absolute;
+        // top: 0;
+        // left: 0;
+        // width: 35px;
+        // height: 35px;
+        padding: 0.3em;
         font-size: 0.8em;
-        border-radius: 50%;
+        border-radius: 5px;
         line-height: 35px;
         text-align: center;
         color: #1b1a20;

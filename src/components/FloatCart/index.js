@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
-import { loadCart, removeProduct, changeProductQuantity } from '../../services/cart/actions';
+import {
+  loadCart,
+  removeProduct,
+  changeProductQuantity,
+} from '../../services/cart/actions';
 import { updateCart } from '../../services/total/actions';
 import CartProduct from './CartProduct';
 import { formatPrice } from '../../services/util';
@@ -22,7 +26,7 @@ class FloatCart extends Component {
   };
 
   state = {
-    isOpen: false
+    isOpen: false,
   };
 
   componentWillReceiveProps(nextProps) {
@@ -47,11 +51,11 @@ class FloatCart extends Component {
     this.setState({ isOpen: false });
   };
 
-  addProduct = product => {
+  addProduct = (product) => {
     const { cartProducts, updateCart } = this.props;
     let productAlreadyInCart = false;
 
-    cartProducts.forEach(cp => {
+    cartProducts.forEach((cp) => {
       if (cp.id === product.id) {
         cp.quantity += product.quantity;
         productAlreadyInCart = true;
@@ -66,10 +70,10 @@ class FloatCart extends Component {
     this.openFloatCart();
   };
 
-  removeProduct = product => {
+  removeProduct = (product) => {
     const { cartProducts, updateCart } = this.props;
 
-    const index = cartProducts.findIndex(p => p.id === product.id);
+    const index = cartProducts.findIndex((p) => p.id === product.id);
     if (index >= 0) {
       cartProducts.splice(index, 1);
       updateCart(cartProducts);
@@ -81,38 +85,43 @@ class FloatCart extends Component {
       totalPrice,
       productQuantity,
       currencyFormat,
-      currencyId
+      currencyId,
     } = this.props.cartTotal;
 
     if (!productQuantity) {
-      alert('Add some product in the cart!');
+      alert('Sepet boş!');
     } else {
-      alert(
-        `Checkout - Subtotal: ${currencyFormat} ${formatPrice(
-          totalPrice,
-          currencyId
-        )}`
-      );
+      alert(`KDVli Fiyat:  ${formatPrice(totalPrice * 1.18, 'TRY')}₺`);
     }
   };
 
-  changeProductQuantity = changedProduct => {
+  changeProductQuantity = (changedProduct) => {
     const { cartProducts, updateCart } = this.props;
 
-    const product = cartProducts.find(p => p.id === changedProduct.id);
+    const product = cartProducts.find((p) => p.id === changedProduct.id);
     product.quantity = changedProduct.quantity;
     if (product.quantity <= 0) {
       this.removeProduct(product);
     }
     updateCart(cartProducts);
-  }
+  };
 
   render() {
-    const { cartTotal, cartProducts, removeProduct, changeProductQuantity } = this.props;
+    const {
+      cartTotal,
+      cartProducts,
+      removeProduct,
+      changeProductQuantity,
+    } = this.props;
 
-    const products = cartProducts.map(p => {
+    const products = cartProducts.map((p) => {
       return (
-        <CartProduct product={p} removeProduct={removeProduct} changeProductQuantity={changeProductQuantity} key={p.id} />
+        <CartProduct
+          product={p}
+          removeProduct={removeProduct}
+          changeProductQuantity={changeProductQuantity}
+          key={p.id}
+        />
       );
     });
 
@@ -149,43 +158,28 @@ class FloatCart extends Component {
             <span className="bag">
               <span className="bag__quantity">{cartTotal.productQuantity}</span>
             </span>
-            <span className="header-title">Cart</span>
+            <span className="header-title">Sepet</span>
           </div>
 
           <div className="float-cart__shelf-container">
             {products}
             {!products.length && (
-              <p className="shelf-empty">
-                Add some products in the cart <br />
-                :)
-              </p>
+              <p className="shelf-empty">Sepete ürün ekleyin</p>
             )}
           </div>
 
           <div className="float-cart__footer">
-            <div className="sub">SUBTOTAL</div>
+            <div className="sub">Toplam:</div>
             <div className="sub-price">
               <p className="sub-price__val">
-                {`${cartTotal.currencyFormat} ${formatPrice(
+                {`${formatPrice(
                   cartTotal.totalPrice,
-                  cartTotal.currencyId
-                )}`}
+                  'TRY'
+                )}₺ + KDV ${formatPrice(cartTotal.totalPrice * 0.18, 'TRY')}₺`}
               </p>
-              <small className="sub-price__installment">
-                {!!cartTotal.installments && (
-                  <span>
-                    {`OR UP TO ${cartTotal.installments} x ${
-                      cartTotal.currencyFormat
-                    } ${formatPrice(
-                      cartTotal.totalPrice / cartTotal.installments,
-                      cartTotal.currencyId
-                    )}`}
-                  </span>
-                )}
-              </small>
             </div>
             <div onClick={() => this.proceedToCheckout()} className="buy-btn">
-              Checkout
+              Tamamla
             </div>
           </div>
         </div>
@@ -194,15 +188,17 @@ class FloatCart extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   cartProducts: state.cart.products,
   newProduct: state.cart.productToAdd,
   productToRemove: state.cart.productToRemove,
   productToChange: state.cart.productToChange,
-  cartTotal: state.total.data
+  cartTotal: state.total.data,
 });
 
-export default connect(
-  mapStateToProps,
-  { loadCart, updateCart, removeProduct, changeProductQuantity }
-)(FloatCart);
+export default connect(mapStateToProps, {
+  loadCart,
+  updateCart,
+  removeProduct,
+  changeProductQuantity,
+})(FloatCart);

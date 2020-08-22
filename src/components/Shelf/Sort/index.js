@@ -6,28 +6,26 @@ import { updateSort } from '../../../services/sort/actions';
 import Selectbox from '../../Selectbox';
 
 const sortBy = [
-  { value: '', label: 'Select' },
-  { value: 'lowestprice', label: 'Lowest to highest' },
-  { value: 'highestprice', label: 'Highest to lowest' }
+  { value: '', label: 'Seç' },
+  { value: 'lowestprice', label: 'Azdan çoka' },
+  { value: 'highestprice', label: 'Çoktan aza' },
 ];
 
 const Sort = ({ updateSort, sort }) => (
   <div className="sort">
-    Order by
-    <Selectbox options={sortBy} handleOnChange={value => updateSort(value)} />
+    Fiyat{' '}
+    <Selectbox options={sortBy} handleOnChange={(value) => updateSort(value)} />{' '}
+    sırala
   </div>
 );
 
 Sort.propTypes = {
   updateSort: PropTypes.func.isRequired,
-  sort: PropTypes.string.isRequired
+  sort: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = state => ({
-  sort: state.sort.type
+const mapStateToProps = (state) => ({
+  sort: state.sort.type,
 });
 
-export default connect(
-  mapStateToProps,
-  { updateSort }
-)(Sort);
+export default connect(mapStateToProps, { updateSort })(Sort);

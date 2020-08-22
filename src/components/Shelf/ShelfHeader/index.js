@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 
 import Sort from '../Sort';
 
-const ShelfHeader = props => {
+const ShelfHeader = (props) => {
   return (
     <div className="shelf-container-header">
       <small className="products-found">
-        <span>{props.productsLength} Product(s) found.</span>
+        <span>{props.productsLength} ürün bulundu.</span>
       </small>
       <Sort />
     </div>
@@ -15,7 +15,7 @@ const ShelfHeader = props => {
 };
 
 ShelfHeader.propTypes = {
-  productsLength: PropTypes.number.isRequired
+  productsLength: PropTypes.number.isRequired,
 };
 
 export default ShelfHeader;
