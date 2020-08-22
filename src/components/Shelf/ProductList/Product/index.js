@@ -20,7 +20,7 @@ const Product = ({ product, addProduct }) => {
       <Thumb
         classes="shelf-item__thumb"
         // src={require(`../../../../static/products/${product.sku}_1.jpg`)}
-        alt={product.title}
+        // alt={product.title}
       />
       <p className="shelf-item__title">{product.title}</p>
       <div className="shelf-item__price">
